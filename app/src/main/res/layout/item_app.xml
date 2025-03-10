@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:gravity="center"
+        android:layout_margin="8dp"
+        tools:ignore="UseCompoundDrawables">
+
+        <!-- App Icon -->
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            tools:src="@mipmap/ic_launcher"
+            android:contentDescription="@string/app_name" />
+
+        <!-- App Name -->
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#000000"
+            android:textAlignment="center"
+            android:maxWidth="80dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_marginTop="4dp"
+            tools:text="App Name" />
+
+    </LinearLayout>
+</layout>

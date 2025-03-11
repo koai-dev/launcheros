@@ -1,19 +1,11 @@
 package com.twt.launcheros.ui.home
 
-import android.content.pm.ApplicationInfo
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.koai.base.main.viewmodel.BaseViewModel
-import com.koai.base.network.ResponseStatus
 import com.twt.launcheros.repository.home.HomeRepo
 
-class HomeViewModel(private val repository: HomeRepo): BaseViewModel() {
-    private val _launcherApps = MutableLiveData<ResponseStatus<List<ApplicationInfo>>>()
-    val launcherApps: MutableLiveData<ResponseStatus<List<ApplicationInfo>>> = _launcherApps
+class HomeViewModel(repository: HomeRepo) : BaseViewModel() {
+    val launcherApps = repository.execute().cachedIn(viewModelScope)
 
-    fun fetchLauncherApps() {
-        launchCoroutine {
-            val apps = repository.fetchApplications()
-            _launcherApps.postValue(ResponseStatus.Success(data = apps))
-        }
-    }
 }

@@ -1,37 +1,32 @@
 package com.twt.launcheros.ui.home
 
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearSmoothScroller
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.koai.base.main.action.router.BaseRouter
 import com.koai.base.main.extension.screenViewModel
-import com.koai.base.network.ResponseStatus
 import com.twt.launcheros.R
 import com.twt.launcheros.databinding.ScreenHomeBinding
 import com.twt.launcheros.ui.IScreen
 import com.twt.launcheros.utils.widgets.PreCachingLayoutManager
+import kotlinx.coroutines.launch
 
 class HomeScreen: IScreen<ScreenHomeBinding, BaseRouter>(R.layout.screen_home) {
     override val viewModel: HomeViewModel by screenViewModel()
     private val adapter = HomeAdapter()
     override fun initView(savedInstanceState: Bundle?, binding: ScreenHomeBinding) {
+        calculateResizeScreen()
         setupGridView()
         observer()
-        getApps()
-    }
-
-    private fun getApps(){
-        viewModel.fetchLauncherApps()
     }
 
     private fun observer(){
-        viewModel.launcherApps.observe(viewLifecycleOwner){status->
-            when(status){
-                is ResponseStatus.Success -> {
-                    hideLoading()
-                    adapter.submitList(status.data)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.launcherApps.collect{
+                    adapter.submitData(it)
                 }
-                else -> showLoading()
             }
         }
     }
@@ -42,12 +37,7 @@ class HomeScreen: IScreen<ScreenHomeBinding, BaseRouter>(R.layout.screen_home) {
 
     private fun setupGridView(){
         binding.grid.apply {
-
-            val layoutMg = PreCachingLayoutManager(activity, 4)
-            layoutMg.isSmoothScrollbarEnabled = true
-            setItemViewCacheSize(200)
-            setRecycledViewPool(RecyclerView.RecycledViewPool())
-            setHasFixedSize(true)
+            val layoutMg = PreCachingLayoutManager(binding.grid.context, 5)
             layoutManager = layoutMg
             itemAnimator = null
             adapter = this@HomeScreen.adapter

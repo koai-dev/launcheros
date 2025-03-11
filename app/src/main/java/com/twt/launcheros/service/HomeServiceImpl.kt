@@ -1,11 +1,10 @@
-package com.twt.launcheros.repository.home
+package com.twt.launcheros.service
 
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 
-
-class HomeRepoImpl(private val context: Context) : HomeRepo {
+class HomeServiceImpl(private val context: Context) : HomeService {
     override suspend fun fetchApplications(): List<ApplicationInfo> {
         val pm = context.packageManager
         val apps = pm.getInstalledApplications(PackageManager.GET_META_DATA)
@@ -13,11 +12,10 @@ class HomeRepoImpl(private val context: Context) : HomeRepo {
 
         for (app in apps) {
             val intent = pm.getLaunchIntentForPackage(app.packageName)
-            if (intent != null) {
+            if (intent != null && app.packageName != context.packageName) {
                 launcherApps.add(app)
             }
         }
-        return apps
+        return launcherApps
     }
-
 }

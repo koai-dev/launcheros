@@ -27,7 +27,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, BaseRouter, MainNavigator
             this.windowInsets = windowInsets
             ViewCompat.onApplyWindowInsets(view, windowInsets)
         }
-        stringFromJNI()
     }
 
     override fun getLoadingView(): View {
@@ -48,10 +47,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, BaseRouter, MainNavigator
         }
     }
 
-//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-//        if (keyCode == KeyEvent.KEYCODE_HOME) {
-//            return true  // Prevent going to the default home screen
-//        }
-//        return super.onKeyDown(keyCode, event)
-//    }
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
+            return true  // Prevent going to the default home screen
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 }

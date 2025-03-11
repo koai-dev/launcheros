@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -10,10 +11,12 @@
         tools:ignore="UseCompoundDrawables">
 
         <!-- App Icon -->
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/icon"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            android:scaleType="centerCrop"
             android:layout_gravity="center"
             tools:src="@mipmap/ic_launcher"
             android:contentDescription="@string/app_name" />

@@ -30,11 +30,7 @@ class HomeScreen: IScreen<ScreenHomeBinding, BaseRouter>(R.layout.screen_home) {
             }
         }
     }
-
-    override fun setupOnBackPressEvent() {
-        super.setupOnBackPressEvent()
-    }
-
+    
     private fun setupGridView(){
         binding.grid.apply {
             val layoutMg = PreCachingLayoutManager(binding.grid.context, 5)

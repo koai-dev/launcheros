@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.koai.base.main.BaseActivity
 import com.koai.base.main.action.router.BaseRouter
 import com.koai.base.widgets.BaseLoadingView
@@ -17,6 +19,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, BaseRouter, MainNavigator
     var windowInsets: WindowInsetsCompat? = null
 
     override fun initView(savedInstanceState: Bundle?, binding: ActivityMainBinding) {
+        val windowInsetsController =
+            WindowCompat.getInsetsController(window, window.decorView)
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { view, windowInsets ->
             windowInsets.getInsets(WindowInsetsCompat.Type.statusBars()).top.takeIf { statusBarHeight -> statusBarHeight > 0 }
                 ?.let { height ->
@@ -24,6 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, BaseRouter, MainNavigator
                 }
             bottomNavigationHeight =
                 windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
             this.windowInsets = windowInsets
             ViewCompat.onApplyWindowInsets(view, windowInsets)
         }
@@ -45,12 +52,5 @@ class MainActivity : BaseActivity<ActivityMainBinding, BaseRouter, MainNavigator
         init {
             System.loadLibrary("launcheros")
         }
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_HOME) {
-            return true  // Prevent going to the default home screen
-        }
-        return super.onKeyDown(keyCode, event)
     }
 }

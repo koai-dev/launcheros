@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 
-class HomeServiceImpl(private val context: Context) : HomeService {
+class ApplicationServiceImpl(private val context: Context) : ApplicationService {
     override suspend fun fetchApplications(): List<ApplicationInfo> {
         val pm = context.packageManager
         val apps = pm.getInstalledApplications(PackageManager.GET_META_DATA)

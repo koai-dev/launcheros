@@ -1,11 +1,14 @@
 package com.twt.launcheros.di
 
-import com.twt.launcheros.service.HomeService
-import com.twt.launcheros.service.HomeServiceImpl
+import com.twt.launcheros.service.ApplicationService
+import com.twt.launcheros.service.ApplicationServiceImpl
+import com.twt.launcheros.service.WidgetService
+import com.twt.launcheros.service.WidgetServiceImpl
 import org.koin.dsl.module
 
 object ServiceModule {
     fun init() = module {
-        factory<HomeService> { HomeServiceImpl(get()) }
+        factory<ApplicationService> { ApplicationServiceImpl(get()) }
+        factory<WidgetService> { WidgetServiceImpl(get()) }
     }
 }

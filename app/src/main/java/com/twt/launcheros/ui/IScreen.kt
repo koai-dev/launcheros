@@ -1,9 +1,7 @@
 package com.twt.launcheros.ui
 
-import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.viewbinding.ViewBinding

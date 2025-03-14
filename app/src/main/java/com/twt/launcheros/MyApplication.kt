@@ -1,7 +1,6 @@
 package com.twt.launcheros
 
 import com.koai.base.BaseApplication
-import com.koai.base.BuildConfig
 import com.koai.base.utils.LogUtils
 import com.twt.launcheros.di.DBModule
 import com.twt.launcheros.di.NavigatorModule

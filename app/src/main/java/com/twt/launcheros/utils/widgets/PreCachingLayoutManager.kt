@@ -6,14 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 
-open class PreCachingLayoutManager(private var context: Context?, spanCount: Int) :
+open class PreCachingLayoutManager(context: Context?, spanCount: Int) :
     GridLayoutManager(context, spanCount) {
     private val defaultExtraLayoutSpace = 5000
     private var extraLayoutSpace = -1
 
     init {
         this.spanCount = spanCount
-
     }
 
     fun setExtraLayoutSpace(extraLayoutSpace: Int) {

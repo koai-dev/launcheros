@@ -8,6 +8,7 @@ class ApplicationServiceImpl(private val context: Context) : ApplicationService 
     override suspend fun fetchApplications(): List<ApplicationInfo> {
         val pm = context.packageManager
         val apps = pm.getInstalledApplications(PackageManager.GET_META_DATA)
+            .filter { it.packageName != "com.android.settings" }
         val launcherApps = mutableListOf<ApplicationInfo>()
 
         for (app in apps) {

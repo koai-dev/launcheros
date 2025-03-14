@@ -15,7 +15,6 @@
             android:id="@+id/icon"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            app:shapeAppearanceOverlay="@style/CircleImage"
             android:scaleType="centerCrop"
             android:layout_gravity="center"
             tools:src="@mipmap/ic_launcher"

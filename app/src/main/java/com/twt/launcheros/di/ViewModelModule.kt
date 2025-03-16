@@ -1,12 +1,12 @@
 package com.twt.launcheros.di
 
 import com.koai.base.main.extension.screenViewModel
-import com.twt.launcheros.ui.home.HomeViewModel
+import com.twt.launcheros.ui.allApps.AllAppsViewModel
 import org.koin.dsl.module
 
 object ViewModelModule {
     fun init() = module {
-        screenViewModel { HomeViewModel(get()) }
+        screenViewModel { AllAppsViewModel(get()) }
 //        screenViewModel { SplashViewModel() }
 //        journeyViewModel { OnboardViewModel() }
 //        screenViewModel { OnBoardingViewModel() }

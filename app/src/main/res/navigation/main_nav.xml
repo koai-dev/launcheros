@@ -9,4 +9,11 @@
         android:id="@+id/homeScreen"
         android:name="com.twt.launcheros.ui.home.HomeScreen"
         android:label="HomeScreen" />
+    <fragment
+        android:id="@+id/allAppsScreen"
+        android:name="com.twt.launcheros.ui.allApps.AllAppsScreen"
+        android:label="AllAppsScreen" />
+    <action
+        android:id="@+id/action_global_allAppsScreen"
+        app:destination="@id/allAppsScreen" />
 </navigation>

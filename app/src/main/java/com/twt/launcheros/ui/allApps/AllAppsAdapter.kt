@@ -1,4 +1,4 @@
-package com.twt.launcheros.ui.home
+package com.twt.launcheros.ui.allApps
 
 import android.content.pm.ApplicationInfo
 import com.koai.base.main.adapter.BasePagingDataAdapter
@@ -7,7 +7,7 @@ import com.koai.base.main.extension.safeClick
 import com.twt.launcheros.R
 import com.twt.launcheros.databinding.ItemAppBinding
 
-class HomeAdapter : BasePagingDataAdapter<ApplicationInfo, ItemAppBinding>(){
+class AllAppsAdapter : BasePagingDataAdapter<ApplicationInfo, ItemAppBinding>(){
     override fun bindView(holder: VH, binding: ItemAppBinding, position: Int) {
         val item = getItem(position)?:return
         binding.icon.loadImage(item.loadIcon(binding.root.context.packageManager))

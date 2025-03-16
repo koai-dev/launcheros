@@ -76,6 +76,7 @@
                 <action android:name="android.app.action.GET_PROVISIONING_MODE" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

@@ -4,4 +4,23 @@
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
     <string name="search_apps">Search apps...</string>
+    <string name="lock_layout_description">lock layout description to be used a unique id to lock screen</string>
+    <string name="time_spent_min" translatable="false"><b>%1$sm</b></string>
+    <string name="time_spent_hour" translatable="false">%1$sh %2$sm</string>
+    <string name="are_you_using_your_phone_or_is_your_phone_using_you">are_you_using_your_phone_or_is_your_phone_using_you</string>
+    <string name="accessibility_service_description">The accessibility permission is required to enable double tap to lock. Any data acquired by KidOS via this service will not leave your device.</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>

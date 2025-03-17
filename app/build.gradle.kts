@@ -84,6 +84,8 @@ dependencies {
     implementation(libs.base)
     // Room components
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.preference)
     annotationProcessor(libs.androidx.room.compiler)
     androidTestImplementation(libs.androidx.room.testing)
 

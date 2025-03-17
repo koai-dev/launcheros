@@ -16,4 +16,11 @@
     <action
         android:id="@+id/action_global_allAppsScreen"
         app:destination="@id/allAppsScreen" />
+    <fragment
+        android:id="@+id/settingsScreen"
+        android:name="com.twt.launcheros.ui.settings.SettingsScreen"
+        android:label="SettingsScreen" />
+    <action
+        android:id="@+id/action_global_settingsScreen"
+        app:destination="@id/settingsScreen" />
 </navigation>

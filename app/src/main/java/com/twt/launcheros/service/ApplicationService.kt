@@ -1,7 +1,7 @@
 package com.twt.launcheros.service
 
-import android.content.pm.ApplicationInfo
+import com.twt.launcheros.model.AppModel
 
 interface ApplicationService {
-    suspend fun fetchApplications(): List<ApplicationInfo>
+    suspend fun fetchApplications(): List<AppModel>
 }

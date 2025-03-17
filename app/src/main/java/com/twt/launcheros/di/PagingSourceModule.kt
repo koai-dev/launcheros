@@ -5,6 +5,6 @@ import org.koin.dsl.module
 
 object PagingSourceModule {
     fun init() = module {
-        factory { HomePagingSource(get()) }
+        factory { HomePagingSource(get(), get()) }
     }
 }

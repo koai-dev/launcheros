@@ -4,6 +4,8 @@ base = "v2.0.2"
 kotlin = "2.0.21"
 pagingRuntimeKtx = "3.3.6"
 roomRuntime = "2.6.1"
+workRuntimeKtx = "2.10.0"
+preference = "1.2.1"
 
 [libraries]
 androidx-paging-common-ktx = { module = "androidx.paging:paging-common-ktx", version.ref = "pagingRuntimeKtx" }
@@ -12,6 +14,8 @@ base = { module = "com.github.koai-dev:base", version.ref = "base" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "roomRuntime" }
+androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
+androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

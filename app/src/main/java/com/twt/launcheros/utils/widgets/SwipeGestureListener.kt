@@ -33,9 +33,9 @@ class SwipeGestureListener(
         val diffY = e2.y - e1.y
         val screenHeight = screenUtilsWrapper.getScreenHeight()
         val screenWidth = screenUtilsWrapper.getScreenWidth()
-        val isSwipeUp = (screenHeight - e1.y)/screenHeight*100f.toInt() < 3
-        val isSwipeLeft = (screenWidth - e1.x)/screenWidth*100f.toInt() < 5
-        val isSwipeRight = e1.x/screenWidth*100f.toInt() < 5
+        val isSwipeUp = (screenHeight - e1.y)/screenHeight*100f.toInt() < 50
+        val isSwipeLeft = (screenWidth - e1.x)/screenWidth*100f.toInt() < 5 && isSwipeUp
+        val isSwipeRight = e1.x/screenWidth*100f.toInt() < 5 && isSwipeUp
 
         return when {
             // Swipe Right (Back)

@@ -1,24 +1,20 @@
 package com.twt.launcheros.ui.allApps
 
-import android.content.pm.ApplicationInfo
 import com.koai.base.main.adapter.BasePagingDataAdapter
 import com.koai.base.main.extension.ClickableViewExtensions.loadImage
 import com.koai.base.main.extension.safeClick
 import com.twt.launcheros.R
 import com.twt.launcheros.databinding.ItemAppBinding
+import com.twt.launcheros.model.AppModel
 
-class AllAppsAdapter : BasePagingDataAdapter<ApplicationInfo, ItemAppBinding>(){
+class AllAppsAdapter(private val onClick: (item: AppModel) -> Unit = { _ -> }) :
+    BasePagingDataAdapter<AppModel, ItemAppBinding>() {
     override fun bindView(holder: VH, binding: ItemAppBinding, position: Int) {
-        val item = getItem(position)?:return
-        binding.icon.loadImage(item.loadIcon(binding.root.context.packageManager))
-        binding.name.text = item.loadLabel(binding.root.context.packageManager)
+        val item = getItem(position) ?: return
+        binding.icon.loadImage(item.icon)
+        binding.name.text = item.label
         binding.root.safeClick(50) {
-            try {
-                val intent = binding.root.context.packageManager.getLaunchIntentForPackage(item.packageName)
-                binding.root.context.startActivity(intent)
-            }catch (e: Exception){
-                e.printStackTrace()
-            }
+            onClick.invoke(item)
         }
         binding.executePendingBindings()
     }

@@ -7,6 +7,7 @@ import com.twt.launcheros.ui.IScreen
 
 class HomeScreen: IScreen<ScreenHomeBinding, HomeRouter>(R.layout.screen_home) {
     override fun initView(savedInstanceState: Bundle?, binding: ScreenHomeBinding) {
+        super.initView(savedInstanceState, binding)
         calculateResizeScreen()
     }
 }

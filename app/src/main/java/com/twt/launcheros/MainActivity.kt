@@ -2,6 +2,7 @@ package com.twt.launcheros
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
 import android.view.GestureDetector
@@ -25,13 +26,19 @@ class MainActivity :
     BaseActivity<ActivityMainBinding, BaseRouter, MainNavigator>(R.layout.activity_main) {
     private val screenUtilsWrapper: ScreenUtilsWrapper by inject()
     override val navigator: MainNavigator by viewModel()
+    private val viewModel by viewModel<MainViewModel>()
     private val gestureDetector: GestureDetector by lazy {
         GestureDetector(
             this@MainActivity,
             SwipeGestureListener(this@MainActivity, screenUtilsWrapper) {
-                navigator.gotoAllApps()
+                navigator.onSwipeUp()
             }
         )
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        viewModel.setWallpaperWorker()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -61,9 +68,10 @@ class MainActivity :
             ViewCompat.onApplyWindowInsets(view, windowInsets)
         }
         if (!isCurrentLauncher(this)) {
-            //todo show popup before navigate to home
+            //todo show ui popup before navigate to home
             startActivity(Intent(Settings.ACTION_HOME_SETTINGS))
         }
+        viewModel.setWallpaperWorker()
     }
 
     override fun getLoadingView(): View {
@@ -79,16 +87,4 @@ class MainActivity :
         return super.dispatchTouchEvent(ev)
     }
 
-    /**
-     * A native method that is implemented by the 'launcheros' native library,
-     * which is packaged with this application.
-     */
-    external fun stringFromJNI(): String
-
-    companion object {
-        // Used to load the 'launcheros' library on application startup.
-        init {
-            System.loadLibrary("launcheros")
-        }
-    }
 }

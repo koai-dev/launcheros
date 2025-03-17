@@ -1,5 +1,6 @@
 package com.twt.launcheros.ui.allApps
 
+import android.os.Build
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -7,9 +8,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.filter
-import com.koai.base.main.action.router.BaseRouter
+import com.koai.base.main.extension.journeyViewModel
 import com.koai.base.main.extension.safeClick
-import com.koai.base.main.extension.screenViewModel
 import com.twt.launcheros.R
 import com.twt.launcheros.databinding.ScreenAllAppsBinding
 import com.twt.launcheros.ui.IScreen
@@ -17,10 +17,25 @@ import com.twt.launcheros.utils.widgets.PreCachingLayoutManager
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class AllAppsScreen : IScreen<ScreenAllAppsBinding, BaseRouter>(R.layout.screen_all_apps) {
-    override val viewModel: AllAppsViewModel by screenViewModel()
-    private val adapter = AllAppsAdapter()
+class AllAppsScreen : IScreen<ScreenAllAppsBinding, AllAppsRouter>(R.layout.screen_all_apps) {
+    override val viewModel: AllAppsViewModel by journeyViewModel()
+    private val adapter = AllAppsAdapter { item ->
+        try {
+            if (item.packageName != "com.android.settings") {
+                val intent =
+                    binding.root.context.packageManager.getLaunchIntentForPackage(item.packageName)
+                binding.root.context.startActivity(intent)
+            } else {
+                router?.gotoSetting()
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     override fun initView(savedInstanceState: Bundle?, binding: ScreenAllAppsBinding) {
+        super.initView(savedInstanceState, binding)
         calculateResizeScreen()
         setupGridView()
         searchView()
@@ -32,7 +47,7 @@ class AllAppsScreen : IScreen<ScreenAllAppsBinding, BaseRouter>(R.layout.screen_
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.launcherApps.collectLatest { data ->
                     adapter.submitData(data.first.filter { item ->
-                        item.loadLabel(activity.packageManager).contains(
+                        item.label.contains(
                             data.second, ignoreCase = true
                         )
                     })
@@ -47,6 +62,9 @@ class AllAppsScreen : IScreen<ScreenAllAppsBinding, BaseRouter>(R.layout.screen_
             layoutManager = layoutMg
             itemAnimator = null
             adapter = this@AllAppsScreen.adapter
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+                frameContentVelocity = 1000f
+            }
         }
     }
 

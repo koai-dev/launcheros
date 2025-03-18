@@ -1,37 +1,31 @@
 package com.twt.launcheros.utils
 
-import android.app.Activity
 import android.app.AppOpsManager
 import android.app.SearchManager
-import android.app.role.RoleManager
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
-import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
 import android.os.UserHandle
-import android.provider.Settings
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
-import com.twt.launcheros.BuildConfig
 import com.twt.launcheros.R
 import java.util.Calendar
 
 //
-//@RequiresApi(Build.VERSION_CODES.Q)
-//fun Activity.showLauncherSelector(requestCode: Int) {
+// @RequiresApi(Build.VERSION_CODES.Q)
+// fun Activity.showLauncherSelector(requestCode: Int) {
 //    val roleManager = getSystemService(Context.ROLE_SERVICE) as RoleManager
 //    if (roleManager.isRoleAvailable(RoleManager.ROLE_HOME)) {
 //        val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_HOME)
 //        startActivityForResult(intent, requestCode)
 //    } else
 //        resetDefaultLauncher()
-//}
+// }
 //
-//fun Context.resetDefaultLauncher() {
+// fun Context.resetDefaultLauncher() {
 //    try {
 //        val componentName = ComponentName(this, FakeHomeActivity::class.java)
 //        packageManager.setComponentEnabledSetting(
@@ -50,18 +44,18 @@ import java.util.Calendar
 //    } catch (e: Exception) {
 //        e.printStackTrace()
 //    }
-//}
+// }
 //
-//fun Context.isDefaultLauncher(): Boolean {
+// fun Context.isDefaultLauncher(): Boolean {
 //    val launcherPackageName = getDefaultLauncherPackage(this)
 //    return BuildConfig.APPLICATION_ID == launcherPackageName
-//}
+// }
 //
-//fun Context.resetLauncherViaFakeActivity() {
+// fun Context.resetLauncherViaFakeActivity() {
 //    resetDefaultLauncher()
 //    if (getDefaultLauncherPackage(this).contains("."))
 //        startActivity(Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS))
-//}
+// }
 
 fun Context.openSearch(query: String? = null) {
     val intent = Intent(Intent.ACTION_WEB_SEARCH)
@@ -84,12 +78,12 @@ fun Context.searchOnPlayStore(query: String? = null): Boolean {
         startActivity(
             Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("https://play.google.com/store/search?q=$query&c=apps")
+                Uri.parse("https://play.google.com/store/search?q=$query&c=apps"),
             ).addFlags(
                 Intent.FLAG_ACTIVITY_NO_HISTORY or
-                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
-                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-            )
+                    Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK,
+            ),
         )
         true
     } catch (e: Exception) {
@@ -98,7 +92,10 @@ fun Context.searchOnPlayStore(query: String? = null): Boolean {
     }
 }
 
-fun Context.isPackageInstalled(packageName: String, userHandle: UserHandle = android.os.Process.myUserHandle()): Boolean {
+fun Context.isPackageInstalled(
+    packageName: String,
+    userHandle: UserHandle = android.os.Process.myUserHandle(),
+): Boolean {
     val launcher = getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
     val activityInfo = launcher.getActivityList(packageName, userHandle)
     return activityInfo.size > 0
@@ -110,7 +107,7 @@ fun Context.appUsagePermissionGranted(): Boolean {
     return appOpsManager.unsafeCheckOpNoThrow(
         "android:get_usage_stats",
         android.os.Process.myUid(),
-        packageName
+        packageName,
     ) == AppOpsManager.MODE_ALLOWED
 }
 
@@ -122,11 +119,12 @@ fun Context.formattedTimeSpent(timeSpent: Long): String {
     return when {
         timeSpent == 0L -> "0m"
 
-        hours > 0 -> getString(
-            R.string.time_spent_hour,
-            hours.toString(),
-            remainingMinutes.toString()
-        )
+        hours > 0 ->
+            getString(
+                R.string.time_spent_hour,
+                hours.toString(),
+                remainingMinutes.toString(),
+            )
 
         minutes > 0 -> {
             getString(R.string.time_spent_min, minutes.toString())
@@ -146,17 +144,17 @@ fun Long.convertEpochToMidnight(): Long {
     return calendar.timeInMillis
 }
 
-fun Long.isDaySince(): Int = ((System.currentTimeMillis().convertEpochToMidnight() - this.convertEpochToMidnight())
-        / Constants.ONE_DAY_IN_MILLIS).toInt()
+fun Long.isDaySince(): Int =
+    (
+        (System.currentTimeMillis().convertEpochToMidnight() - this.convertEpochToMidnight()) /
+            Constants.ONE_DAY_IN_MILLIS
+    ).toInt()
 
-fun Long.hasBeenDays(days: Int): Boolean =
-    ((System.currentTimeMillis() - this) / Constants.ONE_DAY_IN_MILLIS) >= days
+fun Long.hasBeenDays(days: Int): Boolean = ((System.currentTimeMillis() - this) / Constants.ONE_DAY_IN_MILLIS) >= days
 
-fun Long.hasBeenHours(hours: Int): Boolean =
-    ((System.currentTimeMillis() - this) / Constants.ONE_HOUR_IN_MILLIS) >= hours
+fun Long.hasBeenHours(hours: Int): Boolean = ((System.currentTimeMillis() - this) / Constants.ONE_HOUR_IN_MILLIS) >= hours
 
-fun Long.hasBeenMinutes(minutes: Int): Boolean =
-    ((System.currentTimeMillis() - this) / Constants.ONE_MINUTE_IN_MILLIS) >= minutes
+fun Long.hasBeenMinutes(minutes: Int): Boolean = ((System.currentTimeMillis() - this) / Constants.ONE_MINUTE_IN_MILLIS) >= minutes
 
 fun Int.dpToPx(): Int {
     return (this * Resources.getSystem().displayMetrics.density).toInt()

@@ -5,7 +5,8 @@ import com.twt.launcheros.MainNavigator
 import org.koin.dsl.module
 
 object NavigatorModule {
-    fun init() = module {
-        navigatorViewModel { MainNavigator() }
-    }
+    fun init() =
+        module {
+            navigatorViewModel { MainNavigator() }
+        }
 }

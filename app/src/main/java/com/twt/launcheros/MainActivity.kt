@@ -32,7 +32,7 @@ class MainActivity :
             this@MainActivity,
             SwipeGestureListener(this@MainActivity, screenUtilsWrapper) {
                 navigator.onSwipeUp()
-            }
+            },
         )
     }
 
@@ -42,7 +42,10 @@ class MainActivity :
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun initView(savedInstanceState: Bundle?, binding: ActivityMainBinding) {
+    override fun initView(
+        savedInstanceState: Bundle?,
+        binding: ActivityMainBinding,
+    ) {
         val windowInsetsController =
             WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.systemBarsBehavior =
@@ -60,7 +63,7 @@ class MainActivity :
                     0,
                     0,
                     0,
-                    windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+                    windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom,
                 )
             } else {
                 binding.root.setPadding(0, 0, 0, 0)
@@ -68,7 +71,7 @@ class MainActivity :
             ViewCompat.onApplyWindowInsets(view, windowInsets)
         }
         if (!isCurrentLauncher(this)) {
-            //todo show ui popup before navigate to home
+            // todo show ui popup before navigate to home
             startActivity(Intent(Settings.ACTION_HOME_SETTINGS))
         }
         viewModel.setWallpaperWorker()
@@ -86,5 +89,4 @@ class MainActivity :
         }
         return super.dispatchTouchEvent(ev)
     }
-
 }

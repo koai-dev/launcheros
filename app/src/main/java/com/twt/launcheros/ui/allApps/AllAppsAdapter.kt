@@ -9,7 +9,11 @@ import com.twt.launcheros.model.AppModel
 
 class AllAppsAdapter(private val onClick: (item: AppModel) -> Unit = { _ -> }) :
     BasePagingDataAdapter<AppModel, ItemAppBinding>() {
-    override fun bindView(holder: VH, binding: ItemAppBinding, position: Int) {
+    override fun bindView(
+        holder: VH,
+        binding: ItemAppBinding,
+        position: Int,
+    ) {
         val item = getItem(position) ?: return
         binding.icon.loadImage(item.icon)
         binding.name.text = item.label

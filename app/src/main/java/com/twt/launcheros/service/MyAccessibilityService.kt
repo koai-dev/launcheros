@@ -14,7 +14,11 @@ import org.koin.android.ext.android.inject
 class MyAccessibilityService : AccessibilityService() {
     private val pref by inject<EncryptPreference>()
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onStartCommand(
+        intent: Intent?,
+        flags: Int,
+        startId: Int,
+    ): Int {
         return START_STICKY
     }
 
@@ -29,14 +33,14 @@ class MyAccessibilityService : AccessibilityService() {
             val source: AccessibilityNodeInfo = event.source ?: return
             if ((source.className == "android.widget.FrameLayout") and
                 (source.contentDescription == getString(R.string.lock_layout_description))
-            )
+            ) {
                 performGlobalAction(GLOBAL_ACTION_LOCK_SCREEN)
+            }
         } catch (e: Exception) {
             return
         }
     }
 
     override fun onInterrupt() {
-
     }
 }

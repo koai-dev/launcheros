@@ -11,17 +11,17 @@ import kotlin.math.abs
 class SwipeGestureListener(
     private val context: Context,
     private val screenUtilsWrapper: ScreenUtilsWrapper,
-    private val onSwipeUp: () -> Unit
+    private val onSwipeUp: () -> Unit,
 ) :
     GestureDetector.SimpleOnGestureListener() {
-    private val swipeThreshold = 100  // Min distance to be considered a swipe
-    private val swipeVelocityThreshold = 100  // Min velocity to be considered a swipe
+    private val swipeThreshold = 100 // Min distance to be considered a swipe
+    private val swipeVelocityThreshold = 100 // Min velocity to be considered a swipe
 
     override fun onFling(
         e1: MotionEvent?,
         e2: MotionEvent,
         velocityX: Float,
-        velocityY: Float
+        velocityY: Float,
     ): Boolean {
         LogUtils.log("SwipeGestureListener", "onFling")
         if (e1 == null) return false
@@ -33,9 +33,9 @@ class SwipeGestureListener(
         val diffY = e2.y - e1.y
         val screenHeight = screenUtilsWrapper.getScreenHeight()
         val screenWidth = screenUtilsWrapper.getScreenWidth()
-        val isSwipeUp = (screenHeight - e1.y)/screenHeight*100f.toInt() < 50
-        val isSwipeLeft = (screenWidth - e1.x)/screenWidth*100f.toInt() < 5 && isSwipeUp
-        val isSwipeRight = e1.x/screenWidth*100f.toInt() < 5 && isSwipeUp
+        val isSwipeUp = (screenHeight - e1.y) / screenHeight * 100f.toInt() < 50
+        val isSwipeLeft = (screenWidth - e1.x) / screenWidth * 100f.toInt() < 5 && isSwipeUp
+        val isSwipeRight = e1.x / screenWidth * 100f.toInt() < 5 && isSwipeUp
 
         return when {
             // Swipe Right (Back)
@@ -46,7 +46,7 @@ class SwipeGestureListener(
             }
 
             // Swipe Left (Back)
-            diffX < -swipeThreshold && abs(velocityX) > swipeVelocityThreshold  && isSwipeLeft -> {
+            diffX < -swipeThreshold && abs(velocityX) > swipeVelocityThreshold && isSwipeLeft -> {
                 (context as? AppCompatActivity)?.onBackPressedDispatcher?.onBackPressed()
                 LogUtils.log("SwipeGestureListener", "Swipe Left")
                 true

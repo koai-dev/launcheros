@@ -5,8 +5,10 @@ import androidx.preference.PreferenceFragmentCompat
 import com.twt.launcheros.R
 
 class SettingsScreen : PreferenceFragmentCompat() {
-
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreatePreferences(
+        savedInstanceState: Bundle?,
+        rootKey: String?,
+    ) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
     }
 }

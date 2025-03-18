@@ -23,7 +23,6 @@ import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Point
 import android.net.Uri
-import android.os.Build
 import android.os.UserHandle
 import android.os.UserManager
 import android.provider.AlarmClock
@@ -43,7 +42,6 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import com.twt.launcheros.BuildConfig
 import com.twt.launcheros.R
-import com.twt.launcheros.model.AppModel
 import com.twt.launcheros.service.MyAccessibilityService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -51,38 +49,49 @@ import org.json.JSONObject
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import java.text.Collator
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.Scanner
 import kotlin.math.pow
 import kotlin.math.sqrt
-fun Context.showToast(message: String?, duration: Int = Toast.LENGTH_SHORT) {
+
+fun Context.showToast(
+    message: String?,
+    duration: Int = Toast.LENGTH_SHORT,
+) {
     if (message.isNullOrBlank()) return
     Toast.makeText(this, message, duration).show()
 }
 
-fun Context.showToast(stringResource: Int, duration: Int = Toast.LENGTH_SHORT) {
+fun Context.showToast(
+    stringResource: Int,
+    duration: Int = Toast.LENGTH_SHORT,
+) {
     Toast.makeText(this, getString(stringResource), duration).show()
 }
 
 fun isCurrentLauncher(context: Context): Boolean {
-    val intent = Intent(Intent.ACTION_MAIN).apply {
-        addCategory(Intent.CATEGORY_HOME)
-    }
+    val intent =
+        Intent(Intent.ACTION_MAIN).apply {
+            addCategory(Intent.CATEGORY_HOME)
+        }
     val packageManager = context.packageManager
     val resolveInfo = packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
-    return resolveInfo?.activityInfo?.packageName  == context.packageName
+    return resolveInfo?.activityInfo?.packageName == context.packageName
 }
 
-fun isAccessibilityServiceEnabled(context: Context, serviceClass: Class<out AccessibilityService>): Boolean {
+fun isAccessibilityServiceEnabled(
+    context: Context,
+    serviceClass: Class<out AccessibilityService>,
+): Boolean {
     val expectedComponentName = ComponentName(context, serviceClass)
 
-    val enabledServices = Settings.Secure.getString(
-        context.contentResolver,
-        Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
-    ) ?: return false
+    val enabledServices =
+        Settings.Secure.getString(
+            context.contentResolver,
+            Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,
+        ) ?: return false
 
     val colonSplitter = TextUtils.SimpleStringSplitter(':')
     colonSplitter.setString(enabledServices)
@@ -101,14 +110,21 @@ fun getAvailableWidgets(context: Context): List<AppWidgetProviderInfo> {
     return appWidgetManager.installedProviders
 }
 
-fun isPackageInstalled(context: Context, packageName: String, userString: String): Boolean {
+fun isPackageInstalled(
+    context: Context,
+    packageName: String,
+    userString: String,
+): Boolean {
     val launcher = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
     val activityInfo = launcher.getActivityList(packageName, getUserHandleFromString(context, userString))
     if (activityInfo.size > 0) return true
     return false
 }
 
-fun getUserHandleFromString(context: Context, userHandleString: String): UserHandle {
+fun getUserHandleFromString(
+    context: Context,
+    userHandleString: String,
+): UserHandle {
     val userManager = context.getSystemService(Context.USER_SERVICE) as UserManager
     for (userHandle in userManager.userProfiles) {
         if (userHandle.toString() == userHandleString) {
@@ -131,22 +147,32 @@ fun getDefaultLauncherPackage(context: Context): String {
     val result = packageManager.resolveActivity(intent, 0)
     return if (result?.activityInfo != null) {
         result.activityInfo.packageName
-    } else "android"
+    } else {
+        "android"
+    }
 }
 
-fun setPlainWallpaperByTheme(context: Context, appTheme: Int) {
+fun setPlainWallpaperByTheme(
+    context: Context,
+    appTheme: Int,
+) {
     when (appTheme) {
         AppCompatDelegate.MODE_NIGHT_YES -> setPlainWallpaper(context, android.R.color.black)
         AppCompatDelegate.MODE_NIGHT_NO -> setPlainWallpaper(context, android.R.color.white)
         else -> {
-            if (context.isDarkThemeOn())
+            if (context.isDarkThemeOn()) {
                 setPlainWallpaper(context, android.R.color.black)
-            else setPlainWallpaper(context, android.R.color.white)
+            } else {
+                setPlainWallpaper(context, android.R.color.white)
+            }
         }
     }
 }
 
-fun setPlainWallpaper(context: Context, color: Int) {
+fun setPlainWallpaper(
+    context: Context,
+    color: Int,
+) {
     try {
         val bitmap = Bitmap.createBitmap(1000, 2000, Bitmap.Config.ARGB_8888)
         bitmap.eraseColor(context.getColor(color))
@@ -159,14 +185,19 @@ fun setPlainWallpaper(context: Context, color: Int) {
     }
 }
 
-fun getChangedAppTheme(context: Context, currentAppTheme: Int): Int {
+fun getChangedAppTheme(
+    context: Context,
+    currentAppTheme: Int,
+): Int {
     return when (currentAppTheme) {
         AppCompatDelegate.MODE_NIGHT_YES -> AppCompatDelegate.MODE_NIGHT_NO
         AppCompatDelegate.MODE_NIGHT_NO -> AppCompatDelegate.MODE_NIGHT_YES
         else -> {
-            if (context.isDarkThemeOn())
+            if (context.isDarkThemeOn()) {
                 AppCompatDelegate.MODE_NIGHT_NO
-            else AppCompatDelegate.MODE_NIGHT_YES
+            } else {
+                AppCompatDelegate.MODE_NIGHT_YES
+            }
         }
     }
 }
@@ -176,8 +207,9 @@ suspend fun getBitmapFromURL(src: String?): Bitmap? {
         var bitmap: Bitmap? = null
         try {
             val url = URL(src)
-            val connection: HttpURLConnection = url
-                .openConnection() as HttpURLConnection
+            val connection: HttpURLConnection =
+                url
+                    .openConnection() as HttpURLConnection
             connection.doInput = true
             connection.connect()
             val input: InputStream = connection.inputStream
@@ -189,9 +221,12 @@ suspend fun getBitmapFromURL(src: String?): Bitmap? {
     }
 }
 
-suspend fun getWallpaperBitmap(originalImage: Bitmap, width: Int, height: Int): Bitmap {
+suspend fun getWallpaperBitmap(
+    originalImage: Bitmap,
+    width: Int,
+    height: Int,
+): Bitmap {
     return withContext(Dispatchers.IO) {
-
         val background = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
 
         val originalWidth: Float = originalImage.width.toFloat()
@@ -202,10 +237,12 @@ suspend fun getWallpaperBitmap(originalImage: Bitmap, width: Int, height: Int): 
         val widthScale: Float = width / originalWidth
         val scale = maxOf(heightScale, widthScale)
 
-        val (xTranslation, yTranslation) = if (heightScale > widthScale)
-            Pair((width - originalWidth * heightScale) / 2.0f, 0f)
-        else
-            Pair(0f, (height - originalHeight * widthScale) / 2.0f)
+        val (xTranslation, yTranslation) =
+            if (heightScale > widthScale) {
+                Pair((width - originalWidth * heightScale) / 2.0f, 0f)
+            } else {
+                Pair(0f, (height - originalHeight * widthScale) / 2.0f)
+            }
 
         val transformation = Matrix()
         transformation.postTranslate(xTranslation, yTranslation)
@@ -219,11 +256,15 @@ suspend fun getWallpaperBitmap(originalImage: Bitmap, width: Int, height: Int): 
     }
 }
 
-suspend fun setWallpaper(appContext: Context, url: String): Boolean {
+suspend fun setWallpaper(
+    appContext: Context,
+    url: String,
+): Boolean {
     return withContext(Dispatchers.IO) {
         val originalImageBitmap = getBitmapFromURL(url) ?: return@withContext false
-        if (appContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && isTablet(appContext).not())
+        if (appContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && isTablet(appContext).not()) {
             return@withContext false
+        }
 
         val wallpaperManager = WallpaperManager.getInstance(appContext)
         val (width, height) = getScreenDimensions(appContext)
@@ -253,17 +294,21 @@ fun getScreenDimensions(context: Context): Pair<Int, Int> {
     return Pair(point.x, point.y)
 }
 
-suspend fun getTodaysWallpaper(wallType: String, firstOpenTime: Long): String {
+suspend fun getTodaysWallpaper(
+    wallType: String,
+    firstOpenTime: Long,
+): String {
     return withContext(Dispatchers.IO) {
         var wallpaperUrl: String
         try {
-            val key = if (firstOpenTime.isDaySince() < 10)
-                String.format("0_%s", firstOpenTime.isDaySince().toString())
-            else {
-                val month = SimpleDateFormat("M", Locale.ENGLISH).format(Date()) ?: "0"
-                val day = SimpleDateFormat("d", Locale.ENGLISH).format(Date()) ?: "0"
-                String.format("%s_%s", month, day)
-            }
+            val key =
+                if (firstOpenTime.isDaySince() < 10) {
+                    String.format("0_%s", firstOpenTime.isDaySince().toString())
+                } else {
+                    val month = SimpleDateFormat("M", Locale.ENGLISH).format(Date()) ?: "0"
+                    val day = SimpleDateFormat("d", Locale.ENGLISH).format(Date()) ?: "0"
+                    String.format("%s_%s", month, day)
+                }
 
             val url = URL(Constants.urlWallpapers())
             val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
@@ -282,7 +327,6 @@ suspend fun getTodaysWallpaper(wallType: String, firstOpenTime: Long): String {
             val wallpapersJson = JSONObject(wallpapers)
             wallpaperUrl = wallpapersJson.getString(wallType)
             wallpaperUrl
-
         } catch (e: Exception) {
             wallpaperUrl = getBackupWallpaper(wallType)
             wallpaperUrl
@@ -291,9 +335,11 @@ suspend fun getTodaysWallpaper(wallType: String, firstOpenTime: Long): String {
 }
 
 fun getBackupWallpaper(wallType: String): String {
-    return if (wallType == Constants.WALL_TYPE_LIGHT)
+    return if (wallType == Constants.WALL_TYPE_LIGHT) {
         Constants.URL_DEFAULT_LIGHT_WALLPAPER
-    else Constants.URL_DEFAULT_DARK_WALLPAPER
+    } else {
+        Constants.URL_DEFAULT_DARK_WALLPAPER
+    }
 }
 
 fun openSearch(context: Context) {
@@ -344,10 +390,11 @@ fun openAlarmApp(context: Context) {
 
 fun openCalendar(context: Context) {
     try {
-        val calendarUri = CalendarContract.CONTENT_URI
-            .buildUpon()
-            .appendPath("time")
-            .build()
+        val calendarUri =
+            CalendarContract.CONTENT_URI
+                .buildUpon()
+                .appendPath("time")
+                .build()
         context.startActivity(Intent(Intent.ACTION_VIEW, calendarUri))
     } catch (e: Exception) {
         try {
@@ -361,13 +408,18 @@ fun openCalendar(context: Context) {
 }
 
 fun isAccessServiceEnabled(context: Context): Boolean {
-    val enabled = try {
-        Settings.Secure.getInt(context.applicationContext.contentResolver, Settings.Secure.ACCESSIBILITY_ENABLED)
-    } catch (e: Exception) {
-        0
-    }
+    val enabled =
+        try {
+            Settings.Secure.getInt(context.applicationContext.contentResolver, Settings.Secure.ACCESSIBILITY_ENABLED)
+        } catch (e: Exception) {
+            0
+        }
     if (enabled == 1) {
-        val enabledServicesString: String? = Settings.Secure.getString(context.contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
+        val enabledServicesString: String? =
+            Settings.Secure.getString(
+                context.contentResolver,
+                Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,
+            )
         return enabledServicesString?.contains(context.packageName + "/" + MyAccessibilityService::class.java.name) ?: false
     }
     return false
@@ -386,7 +438,7 @@ fun isTablet(context: Context): Boolean {
 
 fun Context.isDarkThemeOn(): Boolean {
     return resources.configuration.uiMode and
-            Configuration.UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
+        Configuration.UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
 }
 
 fun Context.copyToClipboard(text: String) {
@@ -407,8 +459,10 @@ fun Context.isSystemApp(packageName: String): Boolean {
     if (packageName.isBlank()) return true
     return try {
         val applicationInfo = packageManager.getApplicationInfo(packageName, 0)
-        ((applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0)
-                || (applicationInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP != 0))
+        (
+            (applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0) ||
+                (applicationInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP != 0)
+        )
     } catch (e: Exception) {
         e.printStackTrace()
         false
@@ -441,23 +495,26 @@ fun View.animateAlpha(alpha: Float = 1.0f) {
 }
 
 fun Context.shareApp() {
-    val message = getString(R.string.are_you_using_your_phone_or_is_your_phone_using_you) +
+    val message =
+        getString(R.string.are_you_using_your_phone_or_is_your_phone_using_you) +
             "\n" + Constants.URL_OLAUNCHER_PLAY_STORE
-    val sendIntent: Intent = Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, message)
-        type = "text/plain"
-    }
+    val sendIntent: Intent =
+        Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, message)
+            type = "text/plain"
+        }
 
     val shareIntent = Intent.createChooser(sendIntent, null)
     startActivity(shareIntent)
 }
 
 fun Context.rateApp() {
-    val intent = Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse(Constants.URL_OLAUNCHER_PLAY_STORE)
-    )
+    val intent =
+        Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(Constants.URL_OLAUNCHER_PLAY_STORE),
+        )
     var flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
     flags = flags or Intent.FLAG_ACTIVITY_NEW_DOCUMENT
     intent.addFlags(flags)

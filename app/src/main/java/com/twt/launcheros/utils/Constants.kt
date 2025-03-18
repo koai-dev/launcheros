@@ -1,7 +1,6 @@
 package com.twt.launcheros.utils
 
 object Constants {
-
     object Key {
         const val FLAG = "flag"
         const val RENAME = "rename"
@@ -210,10 +209,10 @@ object Constants {
         }
     }
 
-
     // Used to load the 'launcheros' library on application startup.
     init {
         System.loadLibrary("launcheros")
     }
+
     external fun urlWallpapers(): String
 }

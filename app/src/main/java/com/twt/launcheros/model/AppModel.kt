@@ -22,8 +22,9 @@ data class AppModel(
     val timeSpent: String? = null,
 ) : Parcelable
 
-fun ResolveInfo.toAppModel(packageManager: PackageManager) = AppModel(
-    label = this.loadLabel(packageManager).toString(),
-    packageName = this.activityInfo.packageName,
-    icon = this.loadIcon(packageManager)
-)
+fun ResolveInfo.toAppModel(packageManager: PackageManager) =
+    AppModel(
+        label = this.loadLabel(packageManager).toString(),
+        packageName = this.activityInfo.packageName,
+        icon = this.loadIcon(packageManager),
+    )

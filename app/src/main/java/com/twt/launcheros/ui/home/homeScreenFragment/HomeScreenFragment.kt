@@ -7,9 +7,11 @@ import com.twt.launcheros.R
 import com.twt.launcheros.databinding.FragmentHomeScreenBinding
 import com.twt.launcheros.ui.IScreen
 
-class HomeScreenFragment: IScreen<FragmentHomeScreenBinding, BaseRouter>(R.layout.fragment_home_screen) {
-    override fun initView(savedInstanceState: Bundle?, binding: FragmentHomeScreenBinding) {
-
+class HomeScreenFragment : IScreen<FragmentHomeScreenBinding, BaseRouter>(R.layout.fragment_home_screen) {
+    override fun initView(
+        savedInstanceState: Bundle?,
+        binding: FragmentHomeScreenBinding,
+    ) {
     }
 
     companion object {

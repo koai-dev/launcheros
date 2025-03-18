@@ -19,22 +19,25 @@ import kotlinx.coroutines.launch
 
 class AllAppsScreen : IScreen<ScreenAllAppsBinding, AllAppsRouter>(R.layout.screen_all_apps) {
     override val viewModel: AllAppsViewModel by journeyViewModel()
-    private val adapter = AllAppsAdapter { item ->
-        try {
-            if (item.packageName != "com.android.settings") {
-                val intent =
-                    binding.root.context.packageManager.getLaunchIntentForPackage(item.packageName)
-                binding.root.context.startActivity(intent)
-            } else {
-                router?.gotoSetting()
+    private val adapter =
+        AllAppsAdapter { item ->
+            try {
+                if (item.packageName != "com.android.settings") {
+                    val intent =
+                        binding.root.context.packageManager.getLaunchIntentForPackage(item.packageName)
+                    binding.root.context.startActivity(intent)
+                } else {
+                    router?.gotoSetting()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
-    }
 
-    override fun initView(savedInstanceState: Bundle?, binding: ScreenAllAppsBinding) {
+    override fun initView(
+        savedInstanceState: Bundle?,
+        binding: ScreenAllAppsBinding,
+    ) {
         super.initView(savedInstanceState, binding)
         calculateResizeScreen()
         setupGridView()
@@ -46,11 +49,15 @@ class AllAppsScreen : IScreen<ScreenAllAppsBinding, AllAppsRouter>(R.layout.scre
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.launcherApps.collectLatest { data ->
-                    adapter.submitData(data.first.filter { item ->
-                        item.label.contains(
-                            data.second, ignoreCase = true
-                        )
-                    })
+                    binding.grid.layoutManager = PreCachingLayoutManager(binding.grid.context, 5, reverseLayout = data.second.isNotEmpty())
+                    adapter.submitData(
+                        data.first.filter { item ->
+                            item.label.contains(
+                                data.second,
+                                ignoreCase = true,
+                            )
+                        },
+                    )
                 }
             }
         }

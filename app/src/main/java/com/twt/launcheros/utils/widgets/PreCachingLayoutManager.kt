@@ -2,17 +2,16 @@ package com.twt.launcheros.utils.widgets
 
 import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 
-open class PreCachingLayoutManager(context: Context?, spanCount: Int) :
+open class PreCachingLayoutManager(context: Context?, spanCount: Int, reverseLayout: Boolean = false) :
     GridLayoutManager(context, spanCount) {
     private val defaultExtraLayoutSpace = 5000
     private var extraLayoutSpace = -1
 
     init {
         this.spanCount = spanCount
+        this.reverseLayout = reverseLayout
     }
 
     fun setExtraLayoutSpace(extraLayoutSpace: Int) {

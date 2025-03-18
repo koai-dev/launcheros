@@ -32,7 +32,7 @@ android {
             isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
         debug {
@@ -86,10 +86,10 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.preference)
-    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     androidTestImplementation(libs.androidx.room.testing)
 
-    //paging
+    // paging
     implementation(libs.androidx.paging.runtime.ktx)
     testImplementation(libs.androidx.paging.common.ktx)
 }
@@ -97,9 +97,8 @@ dependencies {
 class RoomSchemaArgProvider(
     @get:InputDirectory
     @get:PathSensitive(PathSensitivity.RELATIVE)
-    val schemaDir: File
+    val schemaDir: File,
 ) : CommandLineArgumentProvider {
-
     override fun asArguments(): Iterable<String> {
         // Note: If you're using KAPT and javac, change the line below to
         // return listOf("-Aroom.schemaLocation=${schemaDir.path}").

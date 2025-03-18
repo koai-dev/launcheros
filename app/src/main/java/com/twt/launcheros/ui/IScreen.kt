@@ -19,13 +19,16 @@ abstract class IScreen<T : ViewBinding, Router : BaseRouter>(layoutId: Int) :
     BaseScreen<T, Router, MainNavigator>(layoutId) {
     override val navigator: MainNavigator by navigatorViewModel()
 
-    override fun initView(savedInstanceState: Bundle?, binding: T) {
+    override fun initView(
+        savedInstanceState: Bundle?,
+        binding: T,
+    ) {
         navigator.tag = this::class.java.simpleName
     }
 
     fun calculateResizeScreen(
         pointTop: View = binding.root.findViewById(R.id.point_top),
-        pointBot: View = binding.root.findViewById(R.id.point_bot)
+        pointBot: View = binding.root.findViewById(R.id.point_bot),
     ) {
         val windowInsetsController =
             WindowCompat.getInsetsController(activity.window, activity.window.decorView)
@@ -46,12 +49,15 @@ abstract class IScreen<T : ViewBinding, Router : BaseRouter>(layoutId: Int) :
         }
     }
 
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+    override fun onCreateAnimation(
+        transit: Int,
+        enter: Boolean,
+        nextAnim: Int,
+    ): Animation? {
         return if (enter) {
             AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_bottom)
         } else {
             AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_bottom)
         }
     }
-
 }

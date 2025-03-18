@@ -10,10 +10,11 @@ import com.twt.launcheros.utils.ScreenUtilsWrapper
 import org.koin.dsl.module
 
 object ServiceModule {
-    fun init() = module {
-        single { ScreenUtilsWrapper(get()) }
-        factory<ApplicationService> { ApplicationServiceImpl(get()) }
-        factory<WidgetService> { WidgetServiceImpl(get()) }
-        factory<WallpaperWorkerWrapper> { WallpaperWorkerWrapperImpl(get()) }
-    }
+    fun init() =
+        module {
+            single { ScreenUtilsWrapper(get()) }
+            factory<ApplicationService> { ApplicationServiceImpl(get()) }
+            factory<WidgetService> { WidgetServiceImpl(get()) }
+            factory<WallpaperWorkerWrapper> { WallpaperWorkerWrapperImpl(get()) }
+        }
 }

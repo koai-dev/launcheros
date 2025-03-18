@@ -3,7 +3,5 @@
     <uses-policies>
         <force-lock />
         <reset-password />
-        <limit-password />
-        <encrypted-storage/>
     </uses-policies>
 </device-admin>

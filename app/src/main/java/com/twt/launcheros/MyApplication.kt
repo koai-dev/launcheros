@@ -10,18 +10,19 @@ import com.twt.launcheros.di.ServiceModule
 import com.twt.launcheros.di.ViewModelModule
 import org.koin.dsl.module
 
-class MyApplication: BaseApplication() {
-    override fun appModule() = module {
-        includes(
-            super.appModule(),
-            DBModule.init(),
-            PagingSourceModule.init(),
-            ServiceModule.init(),
-            RepositoryModule.init(),
-            NavigatorModule.init(),
-            ViewModelModule.init(),
-        )
-    }
+class MyApplication : BaseApplication() {
+    override fun appModule() =
+        module {
+            includes(
+                super.appModule(),
+                DBModule.init(),
+                PagingSourceModule.init(),
+                ServiceModule.init(),
+                RepositoryModule.init(),
+                NavigatorModule.init(),
+                ViewModelModule.init(),
+            )
+        }
 
     override fun onCreate() {
         super.onCreate()

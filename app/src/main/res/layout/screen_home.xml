@@ -42,22 +42,7 @@
             android:gravity="center"
             android:foregroundGravity="center"
             app:layout_constraintBottom_toBottomOf="@id/point_bot"
-            android:layout_height="wrap_content">
-
-
-            <!-- App Icon -->
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/icon"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:padding="8dp"
-                android:gravity="center"
-                android:layout_margin="8dp"
-                android:scaleType="centerCrop"
-                android:layout_gravity="center"
-                tools:src="@mipmap/ic_launcher"
-                android:contentDescription="@string/app_name" />
-        </LinearLayout>
+            android:layout_height="wrap_content"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

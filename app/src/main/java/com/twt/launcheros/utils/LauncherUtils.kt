@@ -31,7 +31,6 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.DisplayMetrics
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.WindowManager
@@ -57,7 +56,6 @@ import java.util.Locale
 import java.util.Scanner
 import kotlin.math.pow
 import kotlin.math.sqrt
-
 
 fun Context.showToast(
     message: String?,
@@ -395,7 +393,7 @@ fun openAlarmApp(context: Context) {
             } else {
                 LogUtils.log("CLOCK", "Clock app not found.")
             }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             LogUtils.log("CLOCK", e.message.toString())
         }
     }

@@ -10,9 +10,6 @@ object ViewModelModule {
     fun init() =
         module {
             viewModel { MainViewModel(get()) }
-            journeyViewModel { AllAppsViewModel(get()) }
-//        screenViewModel { SplashViewModel() }
-//        journeyViewModel { OnboardViewModel() }
-//        screenViewModel { OnBoardingViewModel() }
+            journeyViewModel { AllAppsViewModel(get(), get()) }
         }
 }

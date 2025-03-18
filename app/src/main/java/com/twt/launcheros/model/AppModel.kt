@@ -25,16 +25,22 @@ data class AppModel(
     val timeLimit: Long? = 0,
     val lastTimeUsed: String? = null,
     val timeSpent: String? = null,
+    val order: Int? = 0,
 ) : Parcelable
 
-fun ResolveInfo.toAppModel(context: Context, packageManager: PackageManager) =
-    AppModel(
-        label = this.loadLabel(packageManager).toString(),
-        packageName = this.activityInfo.packageName,
-        icon = this.loadIcon(packageManager),
-        isPinned = defaultPinnedApp(context, this.activityInfo.packageName)
-    )
+fun ResolveInfo.toAppModel(
+    context: Context,
+    packageManager: PackageManager,
+) = AppModel(
+    label = this.loadLabel(packageManager).toString(),
+    packageName = this.activityInfo.packageName,
+    icon = this.loadIcon(packageManager),
+    isPinned = defaultPinnedApp(context, this.activityInfo.packageName),
+)
 
-fun defaultPinnedApp(context: Context, packageName: String): Boolean{
+fun defaultPinnedApp(
+    context: Context,
+    packageName: String,
+): Boolean {
     return isDefaultDialer(context, packageName) || isDefaultSmsPackage(context, packageName) || isDefaultBrowser(context, packageName) || isDefaultCamera(context, packageName)
 }

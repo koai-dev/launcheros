@@ -17,7 +17,7 @@ class ApplicationServiceImpl(private val context: Context) : ApplicationService 
                 },
                 PackageManager.MATCH_ALL,
             ).sortedBy { item -> item.loadLabel(pm).toString() }
-                .map { item -> item.toAppModel(pm) }
+                .map { item -> item.toAppModel(context, pm) }
                 .filter { item -> (item.packageName != BuildConfig.APPLICATION_ID) }
                 .sortedBy { item -> item.label }
 

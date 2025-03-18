@@ -86,7 +86,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.preference)
-    ksp(libs.androidx.room.compiler)
+    annotationProcessor(libs.androidx.room.compiler)
     androidTestImplementation(libs.androidx.room.testing)
 
     // paging

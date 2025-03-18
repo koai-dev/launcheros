@@ -10,6 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.filter
 import com.koai.base.main.extension.journeyViewModel
 import com.koai.base.main.extension.safeClick
+import com.koai.base.utils.LogUtils
 import com.twt.launcheros.R
 import com.twt.launcheros.databinding.ScreenAllAppsBinding
 import com.twt.launcheros.ui.IScreen
@@ -21,6 +22,7 @@ class AllAppsScreen : IScreen<ScreenAllAppsBinding, AllAppsRouter>(R.layout.scre
     override val viewModel: AllAppsViewModel by journeyViewModel()
     private val adapter =
         AllAppsAdapter { item ->
+            LogUtils.log("CLICK ITEM", item.packageName)
             try {
                 if (item.packageName != "com.android.settings") {
                     val intent =

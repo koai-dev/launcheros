@@ -20,4 +20,8 @@
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
     </style>
+
+    <style name="TextAppearance.Material3.DisplayLarge.Bold" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

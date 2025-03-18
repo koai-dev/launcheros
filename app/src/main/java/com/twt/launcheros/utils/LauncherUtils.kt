@@ -40,6 +40,8 @@ import android.widget.Toast
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat.startActivity
+import com.koai.base.utils.LogUtils
 import com.twt.launcheros.BuildConfig
 import com.twt.launcheros.R
 import com.twt.launcheros.service.MyAccessibilityService
@@ -55,6 +57,7 @@ import java.util.Locale
 import java.util.Scanner
 import kotlin.math.pow
 import kotlin.math.sqrt
+
 
 fun Context.showToast(
     message: String?,
@@ -384,7 +387,17 @@ fun openAlarmApp(context: Context) {
         val intent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
         context.startActivity(intent)
     } catch (e: Exception) {
-        Log.d("TAG", e.toString())
+        LogUtils.log("CLOCK", e.toString())
+        try {
+            val launchClockIntent = context.packageManager.getLaunchIntentForPackage("com.android.deskclock") ?: context.packageManager.getLaunchIntentForPackage("com.google.android.deskclock")
+            if (launchClockIntent != null) {
+                context.startActivity(launchClockIntent)
+            } else {
+                LogUtils.log("CLOCK", "Clock app not found.")
+            }
+        }catch (e: Exception){
+            LogUtils.log("CLOCK", e.message.toString())
+        }
     }
 }
 

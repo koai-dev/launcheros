@@ -215,4 +215,5 @@ object Constants {
     }
 
     external fun urlWallpapers(): String
+
 }

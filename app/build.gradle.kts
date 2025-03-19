@@ -13,13 +13,19 @@ android {
     namespace = "com.twt.launcheros"
     compileSdk = 35
 
+    sourceSets {
+        named("main") {
+            assets.srcDirs("../assets")
+            jniLibs.srcDirs("libs")
+        }
+    }
     defaultConfig {
         applicationId = "com.twt.launcheros"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
+        multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

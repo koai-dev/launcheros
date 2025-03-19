@@ -1,9 +1,17 @@
 [versions]
 agp = "8.8.2"
+aiVersion = "1.8.2"
+artemisOdbVersion = "2.3.0"
+ashleyVersion = "1.7.4"
 base = "v2.0.2"
+gdxVersion = "1.13.1"
 kotlin = "2.0.21"
+kotlinVersion = "2.1.0"
+kotlinxCoroutinesVersion = "1.10.1"
+ktxVersion = "1.13.1-rc1"
 pagingRuntimeKtx = "3.3.6"
 roomRuntime = "2.6.1"
+visUiVersion = "1.5.5"
 workRuntimeKtx = "2.10.0"
 preference = "1.2.1"
 coreKtx = "1.15.0"
@@ -16,6 +24,9 @@ material = "1.12.0"
 [libraries]
 androidx-paging-common-ktx = { module = "androidx.paging:paging-common-ktx", version.ref = "pagingRuntimeKtx" }
 androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
+artemis-odb = { module = "net.onedaybeard.artemis:artemis-odb", version.ref = "artemisOdbVersion" }
+ashley = { module = "com.badlogicgames.ashley:ashley", version.ref = "ashleyVersion" }
+badlogicgames-gdx-ai = { module = "com.badlogicgames.gdx:gdx-ai", version.ref = "aiVersion" }
 base = { module = "com.github.koai-dev:base", version.ref = "base" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
@@ -23,11 +34,42 @@ androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
 androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+gdx = { module = "com.badlogicgames.gdx:gdx", version.ref = "gdxVersion" }
+gdx-box2d = { module = "com.badlogicgames.gdx:gdx-box2d", version.ref = "gdxVersion" }
+gdx-freetype = { module = "com.badlogicgames.gdx:gdx-freetype", version.ref = "gdxVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinVersion" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesVersion" }
+ktx-actors = { module = "io.github.libktx:ktx-actors", version.ref = "ktxVersion" }
+ktx-ai = { module = "io.github.libktx:ktx-ai", version.ref = "ktxVersion" }
+ktx-app = { module = "io.github.libktx:ktx-app", version.ref = "ktxVersion" }
+ktx-ashley = { module = "io.github.libktx:ktx-ashley", version.ref = "ktxVersion" }
+ktx-artemis = { module = "io.github.libktx:ktx-artemis", version.ref = "ktxVersion" }
+ktx-assets = { module = "io.github.libktx:ktx-assets", version.ref = "ktxVersion" }
+ktx-assets-async = { module = "io.github.libktx:ktx-assets-async", version.ref = "ktxVersion" }
+ktx-async = { module = "io.github.libktx:ktx-async", version.ref = "ktxVersion" }
+ktx-box2d = { module = "io.github.libktx:ktx-box2d", version.ref = "ktxVersion" }
+ktx-collections = { module = "io.github.libktx:ktx-collections", version.ref = "ktxVersion" }
+ktx-freetype = { module = "io.github.libktx:ktx-freetype", version.ref = "ktxVersion" }
+ktx-freetype-async = { module = "io.github.libktx:ktx-freetype-async", version.ref = "ktxVersion" }
+ktx-graphics = { module = "io.github.libktx:ktx-graphics", version.ref = "ktxVersion" }
+ktx-i18n = { module = "io.github.libktx:ktx-i18n", version.ref = "ktxVersion" }
+ktx-json = { module = "io.github.libktx:ktx-json", version.ref = "ktxVersion" }
+ktx-inject = { module = "io.github.libktx:ktx-inject", version.ref = "ktxVersion" }
+ktx-log = { module = "io.github.libktx:ktx-log", version.ref = "ktxVersion" }
+ktx-preferences = { module = "io.github.libktx:ktx-preferences", version.ref = "ktxVersion" }
+ktx-math = { module = "io.github.libktx:ktx-math", version.ref = "ktxVersion" }
+ktx-tiled = { module = "io.github.libktx:ktx-tiled", version.ref = "ktxVersion" }
+ktx-style = { module = "io.github.libktx:ktx-style", version.ref = "ktxVersion" }
+ktx-scene2d = { module = "io.github.libktx:ktx-scene2d", version.ref = "ktxVersion" }
+ktx-reflect = { module = "io.github.libktx:ktx-reflect", version.ref = "ktxVersion" }
+ktx-vis = { module = "io.github.libktx:ktx-vis", version.ref = "ktxVersion" }
+ktx-vis-style = { module = "io.github.libktx:ktx-vis-style", version.ref = "ktxVersion" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+vis-ui = { module = "com.kotcrab.vis:vis-ui", version.ref = "visUiVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

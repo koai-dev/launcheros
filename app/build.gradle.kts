@@ -92,6 +92,7 @@ dependencies {
     // paging
     implementation(libs.androidx.paging.runtime.ktx)
     testImplementation(libs.androidx.paging.common.ktx)
+    implementation(project(":virtualPet"))
 }
 
 class RoomSchemaArgProvider(

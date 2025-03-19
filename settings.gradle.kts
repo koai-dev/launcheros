@@ -23,3 +23,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "launcheros"
 include(":app")
+include(":virtualPet")

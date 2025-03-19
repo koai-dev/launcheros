@@ -100,12 +100,28 @@
             android:overScrollMode="never"
             tools:listitem="@layout/item_app"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/swipe_up_anim"
             app:layout_constraintEnd_toEndOf="parent"
             android:orientation="vertical"
             app:spanCount="5"
             app:layout_constraintStart_toStartOf="parent"
             />
+
+        <com.airbnb.lottie.LottieAnimationView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:lottie_rawRes="@raw/swipe_up"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:alpha="0.5"
+            app:lottie_speed="0.5"
+            android:padding="4dp"
+            app:lottie_colorFilter="@android:color/darker_gray"
+            android:id="@+id/swipe_up_anim"
+            android:adjustViewBounds="true"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

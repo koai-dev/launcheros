@@ -1,12 +1,11 @@
 package com.twt.launcheros.pagingSource
 
-import android.content.Context
 import com.koai.base.main.paging.IPagingSource
 import com.twt.launcheros.model.AppModel
 import com.twt.launcheros.service.ApplicationService
 import kotlin.math.min
 
-class HomePagingSource(private val applicationService: ApplicationService, private val context: Context) : IPagingSource<AppModel>() {
+class HomePagingSource(private val applicationService: ApplicationService) : IPagingSource<AppModel>() {
     override suspend fun loadData(
         startKey: Int,
         rangeKey: IntRange,

@@ -16,7 +16,6 @@ class AllAppsViewModel(repository: HomeRepo, private val applicationService: App
 
     init {
         getApps()
-        getDockApps()
     }
 
     fun searchApps(text: String = "") {
@@ -30,13 +29,8 @@ class AllAppsViewModel(repository: HomeRepo, private val applicationService: App
 
     private fun getApps() {
         launchCoroutine {
+            dockApps.value = applicationService.fetchApplications().filter { it.isPinned == true }.sortedByDescending { it.order }.take(5)
             launcherApps.collect()
-        }
-    }
-
-    private fun getDockApps() {
-        launchCoroutine {
-            dockApps.value = applicationService.fetchApplications().filter { it.isPinned == true }
         }
     }
 }

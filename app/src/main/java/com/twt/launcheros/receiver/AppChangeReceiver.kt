@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import com.koai.base.utils.LogUtils
 
-class AppChangeReceiver private constructor() : BroadcastReceiver() {
+class AppChangeReceiver private constructor(
+    private var onAppChange: (() -> Unit)? = null
+) : BroadcastReceiver() {
     companion object {
         private var instance: AppChangeReceiver? = null
 
@@ -22,8 +24,6 @@ class AppChangeReceiver private constructor() : BroadcastReceiver() {
                 instance!!
             }
     }
-
-    var onAppChange: (() -> Unit)? = null
 
     override fun onReceive(
         context: Context,

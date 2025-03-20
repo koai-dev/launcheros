@@ -60,4 +60,9 @@ abstract class IScreen<T : ViewBinding, Router : BaseRouter>(layoutId: Int) :
             AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_bottom)
         }
     }
+
+    override fun onDestroy() {
+        viewModel.cancelAll()
+        super.onDestroy()
+    }
 }

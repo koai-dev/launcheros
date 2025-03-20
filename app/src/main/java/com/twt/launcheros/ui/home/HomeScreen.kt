@@ -7,17 +7,17 @@ import androidx.lifecycle.repeatOnLifecycle
 import coil.load
 import com.koai.base.main.extension.journeyViewModel
 import com.koai.base.main.extension.safeClick
+import com.twt.launcheros.MainViewModel
 import com.twt.launcheros.R
 import com.twt.launcheros.databinding.ItemDockAppBinding
 import com.twt.launcheros.databinding.ScreenHomeBinding
 import com.twt.launcheros.ui.IScreen
-import com.twt.launcheros.ui.allApps.AllAppsViewModel
 import com.twt.launcheros.ui.home.homeScreenFragment.HomeScreenFragment
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class HomeScreen : IScreen<ScreenHomeBinding, HomeRouter>(R.layout.screen_home) {
-    override val viewModel by journeyViewModel<AllAppsViewModel>()
+    override val viewModel by journeyViewModel<MainViewModel>()
 
     override fun initView(
         savedInstanceState: Bundle?,

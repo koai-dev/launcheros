@@ -5,4 +5,3 @@ package com.twt.launcheros
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-

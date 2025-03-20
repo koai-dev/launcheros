@@ -1,4 +1,4 @@
-package com.twt.launcheros.service
+package com.twt.launcheros.receiver
 
 import android.app.admin.DeviceAdminReceiver
 import android.content.Context
@@ -6,7 +6,7 @@ import android.content.Intent
 import android.widget.Toast
 import com.twt.launcheros.R
 
-class DeviceAdmin : DeviceAdminReceiver() {
+class DeviceAdminReceiver : DeviceAdminReceiver() {
     fun onEnabled(
         intent: Intent?,
         context: Context,

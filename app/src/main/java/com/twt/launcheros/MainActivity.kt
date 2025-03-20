@@ -2,6 +2,7 @@ package com.twt.launcheros
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
@@ -13,9 +14,13 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.koai.base.main.BaseActivity
+import com.koai.base.main.action.event.NavigationEvent
 import com.koai.base.main.action.router.BaseRouter
+import com.koai.base.utils.LogUtils
 import com.koai.base.widgets.BaseLoadingView
 import com.twt.launcheros.databinding.ActivityMainBinding
+import com.twt.launcheros.di.event.AppChangeEvent
+import com.twt.launcheros.receiver.AppChangeReceiver
 import com.twt.launcheros.utils.ScreenUtilsWrapper
 import com.twt.launcheros.utils.isCurrentLauncher
 import com.twt.launcheros.utils.widgets.SwipeGestureListener

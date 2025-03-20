@@ -94,7 +94,7 @@
         </service>
 
         <receiver
-            android:name=".service.DeviceAdmin"
+            android:name=".receiver.DeviceAdminReceiver"
             android:exported="false"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
             <meta-data

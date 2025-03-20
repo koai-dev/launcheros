@@ -4,27 +4,26 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.koai.base.utils.LogUtils
-import com.twt.launcheros.MainNavigator
-import com.twt.launcheros.di.event.AppChangeEvent
 
 class AppChangeReceiver private constructor() : BroadcastReceiver() {
     companion object {
         private var instance: AppChangeReceiver? = null
 
-        fun getInstance(navigator: MainNavigator? = null) =
-            if (instance == null)
-                {
-                    instance =
-                        AppChangeReceiver().apply {
-                            this.navigator = navigator
+        fun getInstance(onAppChange: (() -> Unit)? = null) =
+            if (instance == null) {
+                instance =
+                    AppChangeReceiver().apply {
+                        onAppChange?.let {
+                            this.onAppChange = it
                         }
-                    instance!!
-                } else {
+                    }
+                instance!!
+            } else {
                 instance!!
             }
     }
 
-    private var navigator: MainNavigator? = null
+    var onAppChange: (() -> Unit)? = null
 
     override fun onReceive(
         context: Context,
@@ -34,14 +33,14 @@ class AppChangeReceiver private constructor() : BroadcastReceiver() {
         val data = intent.data
         if (data != null) {
             if (Intent.ACTION_PACKAGE_ADDED == action) {
-                LogUtils.log(this::class.java.simpleName, "ACTION_PACKAGE_ADDED $navigator")
-                navigator?.sendEvent(AppChangeEvent())
+                LogUtils.log(this::class.java.simpleName, "ACTION_PACKAGE_ADDED")
+                onAppChange?.invoke()
             } else if (Intent.ACTION_PACKAGE_REMOVED == action) {
-                LogUtils.log(this::class.java.simpleName, "ACTION_PACKAGE_REMOVED $navigator")
-                navigator?.sendEvent(AppChangeEvent())
+                LogUtils.log(this::class.java.simpleName, "ACTION_PACKAGE_REMOVED")
+                onAppChange?.invoke()
             } else if (Intent.ACTION_PACKAGE_REPLACED == action) {
                 LogUtils.log(this::class.java.simpleName, "ACTION_PACKAGE_REPLACED")
-                navigator?.sendEvent(AppChangeEvent())
+                onAppChange?.invoke()
             }
         }
     }

@@ -14,12 +14,9 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.koai.base.main.BaseActivity
-import com.koai.base.main.action.event.NavigationEvent
 import com.koai.base.main.action.router.BaseRouter
-import com.koai.base.utils.LogUtils
 import com.koai.base.widgets.BaseLoadingView
 import com.twt.launcheros.databinding.ActivityMainBinding
-import com.twt.launcheros.di.event.AppChangeEvent
 import com.twt.launcheros.receiver.AppChangeReceiver
 import com.twt.launcheros.utils.ScreenUtilsWrapper
 import com.twt.launcheros.utils.isCurrentLauncher
@@ -93,5 +90,24 @@ class MainActivity :
             gestureDetector.onTouchEvent(ev)
         }
         return super.dispatchTouchEvent(ev)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(AppChangeReceiver.getInstance(), IntentFilter().apply {
+            addAction(Intent.ACTION_PACKAGE_REMOVED)
+            addAction(Intent.ACTION_PACKAGE_ADDED)
+            addAction(Intent.ACTION_PACKAGE_REPLACED)
+            addDataScheme("package")
+        })
+    }
+
+    override fun onDestroy() {
+        try {
+            unregisterReceiver(AppChangeReceiver.getInstance())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        super.onDestroy()
     }
 }

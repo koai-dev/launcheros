@@ -14,6 +14,7 @@ import com.koai.base.utils.LogUtils
 import com.twt.launcheros.MainViewModel
 import com.twt.launcheros.R
 import com.twt.launcheros.databinding.ScreenAllAppsBinding
+import com.twt.launcheros.receiver.AppChangeReceiver
 import com.twt.launcheros.ui.IScreen
 import com.twt.launcheros.utils.widgets.PreCachingLayoutManager
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +54,11 @@ class AllAppsScreen : IScreen<ScreenAllAppsBinding, AllAppsRouter>(R.layout.scre
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.launcherApps.collectLatest { data ->
-                    binding.grid.layoutManager = PreCachingLayoutManager(binding.grid.context, 5, reverseLayout = data.second.trim().isNotEmpty())
+                    binding.grid.layoutManager = PreCachingLayoutManager(
+                        binding.grid.context,
+                        5,
+                        reverseLayout = data.second.trim().isNotEmpty()
+                    )
                     adapter.submitData(
                         data.first.filter { item ->
                             item.label.contains(
@@ -66,8 +71,10 @@ class AllAppsScreen : IScreen<ScreenAllAppsBinding, AllAppsRouter>(R.layout.scre
                         binding.searchView.setText(data.second)
                     }
                 }
-                viewModel.getApps()
             }
+        }
+        AppChangeReceiver.getInstance {
+            viewModel.getApps()
         }
     }
 
